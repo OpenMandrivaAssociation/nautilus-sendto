@@ -1,6 +1,6 @@
 %define name nautilus-sendto
 %define version 0.10
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
@@ -8,6 +8,7 @@ Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
 Patch0: nautilus-sendto-gaim-0.10-icq.patch
+Patch1: nautilus-sendto-0.10-pidgin.patch
 License: GPL
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -15,7 +16,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: evolution-data-server-devel
 BuildRequires: libnautilus-devel >= 2.13.3
 BuildRequires: dbus-devel
-BuildRequires: gaim-devel
+BuildRequires: pidgin-devel
 BuildRequires: gnome-bluetooth-devel >= 0.7.0
 BuildRequires: gajim
 BuildRequires: perl-XML-Parser
@@ -29,20 +30,22 @@ It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the email or IM account which you want to send
 the file/files.
 
-%package gaim
-Summary: Send files from nautilus to gaim
+%package pidgin
+Summary: Send files from nautilus to pidgin
 Group: Graphical desktop/GNOME
-Requires: gaim
+Requires: pidgin
 Requires: %name = %version
 Provides: %name-plugin = %version-%release
+Provides: nautilus-sendto-gaim
+Obsoletes: nautilus-sendto-gaim
 
-%description gaim
-This application provides integration between nautilus and gaim.  It
+%description pidgin
+This application provides integration between nautilus and pidgin.  It
 adds a Nautilus context menu component ("Send To...") and features a
 dialog for insert the IM account which you want to send the file/files.
 
 %package gajim
-Summary: Send files from nautilus to gaim
+Summary: Send files from nautilus to gajim
 Group: Graphical desktop/GNOME
 Requires: gajim
 Requires: %name = %version
@@ -95,6 +98,9 @@ file/files.
 %prep
 %setup -q -n %name-%version
 %patch0 -p0
+%patch1 -p1 -b .pidgin
+autoconf
+automake
 
 %build
 %configure2_5x
@@ -105,7 +111,7 @@ rm -rf $RPM_BUILD_ROOT %name.lang
 %makeinstall_std
 %find_lang %name
 rm -f %buildroot%_libdir/nautilus/extensions-1.0/*.la \
-      %buildroot%_libdir/gaim/*.la \
+      %buildroot%_libdir/purple-2/*.la \
       %buildroot%_libdir/%name/plugins/*.la
 
 %clean
@@ -128,9 +134,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %_libdir/%name/plugins
 %_datadir/nautilus-sendto/
 
-%files gaim
+%files pidgin
 %defattr(-,root,root)
-%_libdir/gaim/nautilus.so
+%_libdir/purple-2/nautilus.so
 %_libdir/%name/plugins/libnstgaim.so
 
 %files gajim
