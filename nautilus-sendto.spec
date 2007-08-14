@@ -1,6 +1,6 @@
 %define name nautilus-sendto
-%define version 0.10
-%define release %mkrel 4
+%define version 0.12
+%define release %mkrel 1
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
@@ -8,7 +8,6 @@ Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
 Patch0: nautilus-sendto-gaim-0.10-icq.patch
-Patch1: nautilus-sendto-0.10-pidgin.patch
 License: GPL
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -98,9 +97,6 @@ file/files.
 %prep
 %setup -q -n %name-%version
 %patch0 -p0
-%patch1 -p1 -b .pidgin
-autoconf
-automake
 
 %build
 %configure2_5x
@@ -111,7 +107,7 @@ rm -rf $RPM_BUILD_ROOT %name.lang
 %makeinstall_std
 %find_lang %name
 rm -f %buildroot%_libdir/nautilus/extensions-1.0/*.la \
-      %buildroot%_libdir/purple-2/*.la \
+      %buildroot%_libdir/pidgin/*.la \
       %buildroot%_libdir/%name/plugins/*.la
 
 %clean
@@ -136,8 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files pidgin
 %defattr(-,root,root)
-%_libdir/purple-2/nautilus.so
-%_libdir/%name/plugins/libnstgaim.so
+%_libdir/pidgin/nautilus.so
+%_libdir/%name/plugins/libnstpidgin.so
 
 %files gajim
 %defattr(-,root,root)
