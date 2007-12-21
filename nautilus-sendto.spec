@@ -14,6 +14,7 @@ Patch2: nautilus-sendto-0.12-nogaim.patch
 License: GPL
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: evolution-data-server-devel
 BuildRequires: libnautilus-devel >= 2.13.3
 BuildRequires: dbus-devel
