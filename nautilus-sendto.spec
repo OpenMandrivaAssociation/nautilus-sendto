@@ -1,6 +1,6 @@
 %define name nautilus-sendto
-%define version 0.12
-%define release %mkrel 3
+%define version 0.13.1
+%define release %mkrel 1
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
@@ -8,9 +8,6 @@ Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{version}/%{name}-%{version}.tar.bz2
 Patch0: nautilus-sendto-gaim-0.10-icq.patch
-#gw copy of patch0 for the pidgin plugin
-Patch1: nautilus-sendto-pidgin-0.12-icq.patch
-Patch2: nautilus-sendto-0.12-nogaim.patch
 License: GPL
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -100,8 +97,6 @@ file/files.
 %prep
 %setup -q -n %name-%version
 %patch0 -p0
-%patch1 -p0
-%patch2 -p1
 
 %build
 %configure2_5x
@@ -111,7 +106,7 @@ file/files.
 rm -rf $RPM_BUILD_ROOT %name.lang
 %makeinstall_std
 %find_lang %name
-rm -f %buildroot%_libdir/nautilus/extensions-1.0/*.la \
+rm -f %buildroot%_libdir/nautilus/extensions-2.0/*.la \
       %buildroot%_libdir/pidgin/*.la \
       %buildroot%_libdir/%name/plugins/*.la
 
@@ -129,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS AUTHORS ChangeLog
 %_sysconfdir/gconf/schemas/nst.schemas
 %_bindir/nautilus-sendto
-%_libdir/nautilus/extensions-1.0/libnautilus-sendto.so
+%_libdir/nautilus/extensions-2.0/libnautilus-sendto.so
 %_mandir/man1/nautilus-sendto.1*
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins
