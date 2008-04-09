@@ -1,13 +1,12 @@
 %define name nautilus-sendto
-%define version 0.13.2
-%define release %mkrel 2
+%define version 0.14.0
+%define release %mkrel 1
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{version}/%{name}-%{version}.tar.bz2
-Patch0: nautilus-sendto-gaim-0.10-icq.patch
 License: GPL
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -68,6 +67,19 @@ It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the email acount which you want to send the
 file/files.
 
+%package thunderbird
+Summary: Send files from nautilus to thunderbird
+Group: Graphical desktop/GNOME
+Requires: mozilla-thunderbird
+Requires: %name = %version
+Provides: %name-plugin = %version-%release
+
+%description thunderbird
+This application provides integration between nautilus and thunderbird.
+It adds a Nautilus context menu component ("Send To...") and features
+a dialog for insert the email acount which you want to send the
+file/files.
+
 %package sylpheed
 Summary: Send files from nautilus to sylpheed
 Group: Graphical desktop/GNOME
@@ -97,7 +109,6 @@ file/files.
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p0
 
 %build
 %configure2_5x
@@ -107,7 +118,7 @@ file/files.
 rm -rf $RPM_BUILD_ROOT %name.lang
 %makeinstall_std
 %find_lang %name
-rm -f %buildroot%_libdir/nautilus/extensions-2.0/*.la \
+rm -f %buildroot%_libdir/nautilus/extensions-*/*.la \
       %buildroot%_libdir/pidgin/*.la \
       %buildroot%_libdir/%name/plugins/*.la
 
@@ -147,6 +158,10 @@ rm -rf $RPM_BUILD_ROOT
 %files evolution
 %defattr(-,root,root)
 %_libdir/%name/plugins/libnstevolution.so
+
+%files thunderbird
+%defattr(-,root,root)
+%_libdir/%name/plugins/libnstthunderbird.so
 
 %files bluetooth
 %defattr(-,root,root)
