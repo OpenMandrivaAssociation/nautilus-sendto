@@ -1,13 +1,13 @@
 %define name nautilus-sendto
 %define version 1.0.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{version}/%{name}-%{version}.tar.bz2
-License: GPL
+License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
