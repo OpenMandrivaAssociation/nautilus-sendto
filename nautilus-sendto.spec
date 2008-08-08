@@ -17,7 +17,7 @@ BuildRequires: dbus-devel
 BuildRequires: pidgin-devel
 BuildRequires: gnome-bluetooth-devel >= 0.7.0
 BuildRequires: gajim
-BuildRequires: perl-XML-Parser
+BuildRequires: intltool
 Requires: nautilus
 #gw it's useless without at least one plugin
 Requires: %name-plugin = %version
