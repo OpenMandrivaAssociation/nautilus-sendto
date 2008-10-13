@@ -1,6 +1,6 @@
 %define name nautilus-sendto
 %define version 1.1.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
@@ -98,7 +98,7 @@ Summary: Send files from nautilus to bluetooth
 Group: Graphical desktop/GNOME
 Requires: %name = %version
 Provides: %name-plugin = %version-%release
-Requires: bluez-utils
+Requires: bluez-gnome
 
 %description bluetooth
 This application provides integration between nautilus and bluetooth.
