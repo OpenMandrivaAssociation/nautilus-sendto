@@ -13,9 +13,8 @@ Url: http://www.es.gnome.org/~telemaco/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: evolution-data-server-devel
 BuildRequires: libnautilus-devel >= 2.13.3
-BuildRequires: dbus-devel
+BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
-BuildRequires: gnome-bluetooth-devel >= 0.7.0
 BuildRequires: gajim
 BuildRequires: intltool
 Requires: nautilus
