@@ -1,12 +1,12 @@
 %define name nautilus-sendto
-%define version 1.1.0
-%define release %mkrel 2
+%define version 1.1.1
+%define release %mkrel 1
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{version}/%{name}-%{version}.tar.bz2
+Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -16,6 +16,9 @@ BuildRequires: libnautilus-devel >= 2.13.3
 BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
 BuildRequires: gajim
+BuildRequires: empathy-devel
+#gw: not yet packaged
+#BuildRequires: gupnp-av-devel
 BuildRequires: intltool
 Requires: nautilus
 #gw it's useless without at least one plugin
@@ -38,6 +41,18 @@ Obsoletes: nautilus-sendto-gaim
 
 %description pidgin
 This application provides integration between nautilus and pidgin.  It
+adds a Nautilus context menu component ("Send To...") and features a
+dialog for insert the IM account which you want to send the file/files.
+
+%package empathy
+Summary: Send files from nautilus to empathy
+Group: Graphical desktop/GNOME
+Requires: empathy
+Requires: %name = %version
+Provides: %name-plugin = %version-%release
+
+%description empathy
+This application provides integration between nautilus and empathy.  It
 adds a Nautilus context menu component ("Send To...") and features a
 dialog for insert the IM account which you want to send the file/files.
 
@@ -88,6 +103,19 @@ Provides: %name-plugin = %version-%release
 
 %description sylpheed
 This application provides integration between nautilus and sylpheed.
+It adds a Nautilus context menu component ("Send To...") and features
+a dialog for insert the email acount which you want to send the
+file/files.
+
+%package balsa
+Summary: Send files from nautilus to bals
+Group: Graphical desktop/GNOME
+Requires:balsa
+Requires: %name = %version
+Provides: %name-plugin = %version-%release
+
+%description balsa
+This application provides integration between nautilus and balsa.
 It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the email acount which you want to send the
 file/files.
@@ -146,6 +174,10 @@ rm -rf $RPM_BUILD_ROOT
 %_libdir/pidgin/nautilus.so
 %_libdir/%name/plugins/libnstpidgin.so
 
+%files empathy
+%defattr(-,root,root)
+%_libdir/%name/plugins/libnstempathy.so
+
 %files gajim
 %defattr(-,root,root)
 %_libdir/%name/plugins/libnstgajim.so
@@ -153,6 +185,10 @@ rm -rf $RPM_BUILD_ROOT
 %files sylpheed
 %defattr(-,root,root)
 %_libdir/%name/plugins/libnstsylpheed.so
+
+%files balsa
+%defattr(-,root,root)
+%_libdir/%name/plugins/libnstbalsa.so
 
 %files evolution
 %defattr(-,root,root)
