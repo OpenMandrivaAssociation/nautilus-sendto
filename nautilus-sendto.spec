@@ -1,12 +1,13 @@
 %define name nautilus-sendto
 %define version 1.1.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
+Patch: nautilus-sendto-1.1.1-format-string.patch
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -17,8 +18,7 @@ BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
 BuildRequires: gajim
 BuildRequires: empathy-devel
-#gw: not yet packaged
-#BuildRequires: gupnp-av-devel
+BuildRequires: gupnp-av-devel
 BuildRequires: intltool
 Requires: nautilus
 #gw it's useless without at least one plugin
@@ -133,9 +133,21 @@ It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the bluetooth device which you want to send the
 file/files.
 
+%package upnp
+Summary: Send files from nautilus via UPNP
+Group: Graphical desktop/GNOME
+Requires: %name = %version
+Provides: %name-plugin = %version-%release
+
+%description upnp
+This application provides integration between nautilus and UPNP.
+It adds a Nautilus context menu component ("Send To...") and allows sending
+files to UPNP media servers.
+
 
 %prep
 %setup -q -n %name-%version
+%patch -p1
 
 %build
 %configure2_5x
@@ -202,4 +214,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %_libdir/%name/plugins/libnstbluetooth.so
 
+%files upnp
+%defattr(-,root,root)
+%_libdir/%name/plugins/libnstupnp.so
 
