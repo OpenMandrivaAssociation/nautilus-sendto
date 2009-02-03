@@ -1,6 +1,6 @@
 %define name nautilus-sendto
 %define version 1.1.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
