@@ -1,6 +1,6 @@
 %define name nautilus-sendto
-%define version 1.1.1
-%define release %mkrel 4
+%define version 1.1.2
+%define release %mkrel 1
 
 Summary: Send files from nautilus using evolution or gaim
 Name: %{name}
@@ -12,7 +12,7 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: evolution-data-server-devel
+BuildRequires: evolution-data-server-devel evolution-devel
 BuildRequires: libnautilus-devel >= 2.13.3
 BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
@@ -21,8 +21,10 @@ BuildRequires: empathy-devel
 BuildRequires: gupnp-av-devel
 BuildRequires: intltool
 Requires: nautilus
-#gw it's useless without at least one plugin
-Requires: %name-plugin = %version
+Obsoletes: nautilus-sendto-sylpheed nautilus-sendto-thunderbird nautilus-sendto-balsa
+#suggest the most important plugins
+Suggests: %name-pidgin %name-evolution %name-bluetooth
+
 
 %description
 This application provides integration between nautilus, evolution and gaim.
@@ -35,7 +37,6 @@ Summary: Send files from nautilus to pidgin
 Group: Graphical desktop/GNOME
 Requires: pidgin
 Requires: %name = %version
-Provides: %name-plugin = %version-%release
 Provides: nautilus-sendto-gaim
 Obsoletes: nautilus-sendto-gaim
 
@@ -49,7 +50,6 @@ Summary: Send files from nautilus to empathy
 Group: Graphical desktop/GNOME
 Requires: empathy
 Requires: %name = %version
-Provides: %name-plugin = %version-%release
 
 %description empathy
 This application provides integration between nautilus and empathy.  It
@@ -61,7 +61,6 @@ Summary: Send files from nautilus to gajim
 Group: Graphical desktop/GNOME
 Requires: gajim
 Requires: %name = %version
-Provides: %name-plugin = %version-%release
 
 %description gajim
 This application provides integration between nautilus and gajim.  It
@@ -73,49 +72,9 @@ Summary: Send files from nautilus to evolution
 Group: Graphical desktop/GNOME
 Requires: evolution
 Requires: %name = %version
-Provides: %name-plugin = %version-%release
 
 %description evolution
 This application provides integration between nautilus and evolution.
-It adds a Nautilus context menu component ("Send To...") and features
-a dialog for insert the email acount which you want to send the
-file/files.
-
-%package thunderbird
-Summary: Send files from nautilus to thunderbird
-Group: Graphical desktop/GNOME
-Requires: mozilla-thunderbird
-Requires: %name = %version
-Provides: %name-plugin = %version-%release
-
-%description thunderbird
-This application provides integration between nautilus and thunderbird.
-It adds a Nautilus context menu component ("Send To...") and features
-a dialog for insert the email acount which you want to send the
-file/files.
-
-%package sylpheed
-Summary: Send files from nautilus to sylpheed
-Group: Graphical desktop/GNOME
-Requires:sylpheed
-Requires: %name = %version
-Provides: %name-plugin = %version-%release
-
-%description sylpheed
-This application provides integration between nautilus and sylpheed.
-It adds a Nautilus context menu component ("Send To...") and features
-a dialog for insert the email acount which you want to send the
-file/files.
-
-%package balsa
-Summary: Send files from nautilus to bals
-Group: Graphical desktop/GNOME
-Requires:balsa
-Requires: %name = %version
-Provides: %name-plugin = %version-%release
-
-%description balsa
-This application provides integration between nautilus and balsa.
 It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the email acount which you want to send the
 file/files.
@@ -124,7 +83,6 @@ file/files.
 Summary: Send files from nautilus to bluetooth
 Group: Graphical desktop/GNOME
 Requires: %name = %version
-Provides: %name-plugin = %version-%release
 Requires: bluez-gnome
 
 %description bluetooth
@@ -137,7 +95,6 @@ file/files.
 Summary: Send files from nautilus via UPNP
 Group: Graphical desktop/GNOME
 Requires: %name = %version
-Provides: %name-plugin = %version-%release
 
 %description upnp
 This application provides integration between nautilus and UPNP.
@@ -150,7 +107,7 @@ files to UPNP media servers.
 %patch -p1
 
 %build
-%configure2_5x
+%configure2_5x --disable-schemas-install
 %make
 
 %install
@@ -159,7 +116,8 @@ rm -rf $RPM_BUILD_ROOT %name.lang
 %find_lang %name
 rm -f %buildroot%_libdir/nautilus/extensions-*/*.la \
       %buildroot%_libdir/pidgin/*.la \
-      %buildroot%_libdir/%name/plugins/*.la
+      %buildroot%_libdir/%name/plugins/*.la \
+      %buildroot%_libdir/evolution/*/plugins/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -179,6 +137,8 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man1/nautilus-sendto.1*
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins
+%_libdir/%name/plugins/libnstburn.so
+%_libdir/%name/plugins/libnstremovable_devices.so
 %_datadir/nautilus-sendto/
 
 %files pidgin
@@ -194,21 +154,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %_libdir/%name/plugins/libnstgajim.so
 
-%files sylpheed
-%defattr(-,root,root)
-%_libdir/%name/plugins/libnstsylpheed.so
-
-%files balsa
-%defattr(-,root,root)
-%_libdir/%name/plugins/libnstbalsa.so
-
 %files evolution
 %defattr(-,root,root)
 %_libdir/%name/plugins/libnstevolution.so
-
-%files thunderbird
-%defattr(-,root,root)
-%_libdir/%name/plugins/libnstthunderbird.so
+%_libdir/evolution/*/plugins/liborg-gnome-evolution-send-attachments-to.so
+%_libdir/evolution/*/plugins/org-gnome-evolution-send-attachments-to.eplug
 
 %files bluetooth
 %defattr(-,root,root)
