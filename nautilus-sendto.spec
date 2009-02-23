@@ -13,6 +13,8 @@ Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: evolution-data-server-devel evolution-devel
+#gw libtool dep of evolution:
+BuildRequires: gnome-pilot-devel
 BuildRequires: libnautilus-devel >= 2.13.3
 BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
