@@ -2,7 +2,7 @@
 %define version 1.1.5
 %define release %mkrel 1
 
-Summary: Send files from nautilus using evolution or gaim
+Summary: Send files from nautilus using with mail or IM
 Name: %{name}
 Version: %{version}
 Release: %{release}
@@ -12,9 +12,6 @@ License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: evolution-data-server-devel evolution-devel
-#gw libtool dep of evolution:
-BuildRequires: gnome-pilot-devel
 BuildRequires: libnautilus-devel >= 2.13.3
 BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
@@ -25,11 +22,11 @@ BuildRequires: intltool
 Requires: nautilus
 Obsoletes: nautilus-sendto-sylpheed nautilus-sendto-thunderbird nautilus-sendto-balsa
 #suggest the most important plugins
-Suggests: %name-pidgin %name-evolution %name-bluetooth
+Suggests: %name-pidgin %name-bluetooth
 
 
 %description
-This application provides integration between nautilus, evolution and gaim.
+This application provides integration between nautilus and mail or IM clients.
 It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the email or IM account which you want to send
 the file/files.
@@ -69,17 +66,6 @@ This application provides integration between nautilus and gajim.  It
 adds a Nautilus context menu component ("Send To...") and features a
 dialog for insert the IM account which you want to send the file/files.
 
-%package evolution
-Summary: Send files from nautilus to evolution
-Group: Graphical desktop/GNOME
-Requires: evolution
-Requires: %name = %version
-
-%description evolution
-This application provides integration between nautilus and evolution.
-It adds a Nautilus context menu component ("Send To...") and features
-a dialog for insert the email acount which you want to send the
-file/files.
 
 %package bluetooth
 Summary: Send files from nautilus to bluetooth
@@ -118,9 +104,7 @@ rm -rf $RPM_BUILD_ROOT %name.lang
 %find_lang %name
 rm -f %buildroot%_libdir/nautilus/extensions-*/*.la \
       %buildroot%_libdir/pidgin/*.la \
-      %buildroot%_libdir/%name/plugins/*.la \
-      %buildroot%_libdir/evolution/*/plugins/*.la
-
+      %buildroot%_libdir/%name/plugins/*.la
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -155,12 +139,6 @@ rm -rf $RPM_BUILD_ROOT
 %files gajim
 %defattr(-,root,root)
 %_libdir/%name/plugins/libnstgajim.so
-
-%files evolution
-%defattr(-,root,root)
-%_libdir/%name/plugins/libnstevolution.so
-%_libdir/evolution/*/plugins/liborg-gnome-evolution-send-attachments-to.so
-%_libdir/evolution/*/plugins/org-gnome-evolution-send-attachments-to.eplug
 
 %files bluetooth
 %defattr(-,root,root)
