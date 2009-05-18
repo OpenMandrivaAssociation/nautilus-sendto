@@ -13,6 +13,7 @@ Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: libnautilus-devel >= 2.13.3
+BuildRequires: libglade2.0-devel
 BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
 BuildRequires: gajim
