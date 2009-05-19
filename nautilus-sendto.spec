@@ -1,6 +1,6 @@
 %define name nautilus-sendto
 %define version 1.1.5
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: Send files from nautilus using with mail or IM
 Name: %{name}
