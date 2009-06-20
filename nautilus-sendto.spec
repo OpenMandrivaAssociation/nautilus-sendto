@@ -8,6 +8,7 @@ Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
 Patch: nautilus-sendto-1.1.1-format-string.patch
+Patch1: nautilus-sendto-empathy-2.27.3.patch
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -17,7 +18,7 @@ BuildRequires: libglade2.0-devel
 BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
 BuildRequires: gajim
-BuildRequires: empathy-devel
+BuildRequires: empathy-devel >= 2.27.3
 BuildRequires: gupnp-av-devel
 BuildRequires: intltool
 Requires: nautilus
@@ -94,6 +95,8 @@ files to UPNP media servers.
 %prep
 %setup -q -n %name-%version
 %patch -p1
+%patch1 -p1
+autoreconf -fi
 
 %build
 %configure2_5x --disable-schemas-install
