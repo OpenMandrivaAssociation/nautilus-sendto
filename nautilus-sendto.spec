@@ -21,6 +21,7 @@ BuildRequires: gajim
 BuildRequires: empathy-devel >= 2.27.3
 BuildRequires: gupnp-av-devel
 BuildRequires: intltool
+BuildRequires: gnome-common
 Requires: nautilus
 Obsoletes: nautilus-sendto-sylpheed nautilus-sendto-thunderbird nautilus-sendto-balsa
 #suggest the most important plugins
