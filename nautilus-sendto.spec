@@ -1,6 +1,6 @@
 %define name nautilus-sendto
 %define version 1.1.6
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Send files from nautilus using with mail or IM
 Name: %{name}
@@ -8,6 +8,9 @@ Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
 Patch: nautilus-sendto-1.1.1-format-string.patch
+# gw fix build with new empathy
+# http://bugzilla.gnome.org/show_bug.cgi?id=593124
+Patch1: nautilus-sendto-empathy-mission-control-5.patch
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -17,7 +20,7 @@ BuildRequires: libglade2.0-devel
 BuildRequires: dbus-glib-devel
 BuildRequires: pidgin-devel
 BuildRequires: gajim
-BuildRequires: empathy-devel >= 2.27.3
+BuildRequires: empathy-devel >= 2.27.91.1-2mdv
 BuildRequires: gupnp-av-devel
 BuildRequires: evolution-data-server-devel evolution-devel	 
 #gw libtool dep of evolution: 	     
@@ -109,6 +112,7 @@ file/files.
 %prep
 %setup -q -n %name-%version
 %patch -p1
+%patch1 -p1
 
 %build
 %configure2_5x --disable-schemas-install
