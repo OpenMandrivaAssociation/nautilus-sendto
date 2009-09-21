@@ -1,13 +1,12 @@
 %define name nautilus-sendto
-%define version 1.1.7
-%define release %mkrel 4
+%define version 2.28.0
+%define release %mkrel 1
 
 Summary: Send files from nautilus using with mail or IM
 Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
-Patch: nautilus-sendto-1.1.1-format-string.patch
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -108,7 +107,6 @@ file/files.
 
 %prep
 %setup -q -n %name-%version
-%patch -p1
 
 %build
 %configure2_5x --disable-schemas-install
