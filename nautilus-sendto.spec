@@ -7,6 +7,7 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
+Patch0: nautilus-sendto-2.28.2-linkage.patch
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
@@ -22,12 +23,11 @@ BuildRequires: evolution-data-server-devel evolution-devel
 #gw libtool dep of evolution: 	     
 BuildRequires: gnome-pilot-devel 	      
 BuildRequires: intltool
-BuildRequires: gnome-common
+BuildRequires: gnome-common gtk-doc
 Requires: nautilus
 Obsoletes: nautilus-sendto-sylpheed nautilus-sendto-thunderbird nautilus-sendto-balsa
 #suggest the most important plugins
 Suggests: %name-bluetooth %name-evolution
-
 
 %description
 This application provides integration between nautilus and mail or IM clients.
@@ -105,10 +105,20 @@ It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the email acount which you want to send the
 file/files.
 
+%package devel
+Summary: Development files for nautilus-sendto
+Group: Graphical desktop/GNOME
+
+%description devel
+This package provides development files needed to build plugins upon
+nautilus-sendto.
+
 %prep
 %setup -q -n %name-%version
+%patch0 -p0
 
 %build
+autoreconf -fi
 %configure2_5x --disable-schemas-install
 %make
 
@@ -143,7 +153,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files pidgin
 %defattr(-,root,root)
-%_libdir/pidgin/nautilus.so
 %_libdir/%name/plugins/libnstpidgin.so
 
 %files empathy
@@ -164,4 +173,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files evolution	 
 %defattr(-,root,root)	 
-%_libdir/%name/plugins/libnstevolution.so	 
+%_libdir/%name/plugins/libnstevolution.so
+
+%files devel
+%defattr(-,root,root)
+%dir %_includedir/nautilus-sendto
+%_includedir/nautilus-sendto/nautilus-sendto-plugin.h
+%_libdir/pkgconfig/nautilus-sendto.pc
+%_datadir/gtk-doc/html/nautilus-sendto
+
