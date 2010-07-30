@@ -1,6 +1,6 @@
 %define name nautilus-sendto
 %define version 2.28.4
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: Send files from nautilus using with mail or IM
 Name: %{name}
@@ -81,6 +81,8 @@ nautilus-sendto.
 %setup -q -n %name-%version
 
 %build
+#gw: https://bugzilla.gnome.org/show_bug.cgi?id=597270 
+%define _disable_ld_as_needed 1
 %configure2_5x --disable-schemas-install
 %make
 
