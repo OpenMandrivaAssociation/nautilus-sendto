@@ -1,5 +1,5 @@
 %define name nautilus-sendto
-%define version 2.28.5
+%define version 2.31.6
 %define release %mkrel 1
 
 Summary: Send files from nautilus using with mail or IM
@@ -83,7 +83,7 @@ nautilus-sendto.
 %build
 #gw: https://bugzilla.gnome.org/show_bug.cgi?id=597270 
 %define _disable_ld_as_needed 1
-%configure2_5x --disable-schemas-install
+%configure2_5x
 %make
 
 %install
@@ -97,16 +97,9 @@ rm -f %buildroot%_libdir/nautilus-sendto/plugins/libnstbluetooth.so
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-%post_install_gconf_schemas nst
-
-%preun
-%preun_uninstall_gconf_schemas nst
-
 %files -f %name.lang
 %defattr(-,root,root)
 %doc NEWS AUTHORS ChangeLog
-%_sysconfdir/gconf/schemas/nst.schemas
 %_bindir/nautilus-sendto
 %_libdir/nautilus/extensions-2.0/libnautilus-sendto.so
 %_mandir/man1/nautilus-sendto.1*
@@ -116,6 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 %_libdir/%name/plugins/libnstgajim.so
 %_libdir/%name/plugins/libnstremovable_devices.so
 %_datadir/nautilus-sendto/
+%_datadir/GConf/gsettings/nautilus-sendto-convert
+%_datadir/glib-2.0/schemas/org.gnome.Nautilus.Sendto.gschema.xml
 
 %files pidgin
 %defattr(-,root,root)
