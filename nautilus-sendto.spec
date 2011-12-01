@@ -87,7 +87,7 @@ nautilus-sendto.
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT %name.lang
+rm -rf %{buildroot} %name.lang
 %makeinstall_std
 %find_lang %name
 rm -f %buildroot%_libdir/nautilus/extensions-*/*.la \
@@ -95,7 +95,7 @@ rm -f %buildroot%_libdir/nautilus/extensions-*/*.la \
       %buildroot%_libdir/%name/plugins/*.la
 rm -f %buildroot%_libdir/nautilus-sendto/plugins/libnstbluetooth.so
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files -f %name.lang
 %defattr(-,root,root)
