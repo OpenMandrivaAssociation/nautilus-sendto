@@ -8,6 +8,7 @@ Url: http://www.es.gnome.org/~telemaco/
 Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.xz
 
 BuildRequires: intltool
+BuildRequires: glib2.0-common
 BuildRequires: gnome-common
 BuildRequires: gtk-doc
 BuildRequires: pkgconfig(glib-2.0) >= 2.25.9
