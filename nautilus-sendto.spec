@@ -1,33 +1,45 @@
-%define name nautilus-sendto
-%define version 2.32.0
-%define release %mkrel 2
-
 Summary: Send files from nautilus using with mail or IM
-Name: %{name}
-Version: %{version}
-Release: %{release}
-Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.bz2
+Name: nautilus-sendto
+Version: 3.0.1
+Release: 1
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: libnautilus-devel >= 2.13.3
-BuildRequires: libglade2.0-devel
-BuildRequires: dbus-glib-devel
-BuildRequires: pidgin-devel
-BuildRequires: gupnp-av-devel
-BuildRequires: evolution-data-server-devel evolution-devel	 
-#gw libtool dep of evolution: 	     
-BuildRequires: gnome-pilot-devel 	      
+Source0: http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{name}-%{version}.tar.xz
+
 BuildRequires: intltool
-BuildRequires: gnome-common gtk-doc
+BuildRequires: gnome-common
+BuildRequires: gtk-doc
+BuildRequires: pkgconfig(glib-2.0) >= 2.25.9
+BuildRequires: pkgconfig(gthread-2.0) >= 2.25.9
+BuildRequires: pkgconfig(gmodule-2.0) >= 2.25.9
+BuildRequires: pkgconfig(gtk+-3.0) >= 2.90.9
+BuildRequires: pkgconfig(libnautilus-extension) >= 2.31.3
+BuildRequires: pkgconfig(libebook-1.2) >= 1.5.3
+BuildRequires: pkgconfig(dbus-1) >= 1.0
+BuildRequires: pkgconfig(dbus-glib-1) >= 0.60
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(gupnp-1.0) >= 0.13
+
+Requires: gsettings-desktop-schemas
 Requires: nautilus
-Provides: nautilus-sendto-gajim 
-Obsoletes: nautilus-sendto-gajim nautilus-sendto-sylpheed nautilus-sendto-thunderbird nautilus-sendto-balsa
+Obsoletes: nautilus-sendto-sylpheed nautilus-sendto-thunderbird nautilus-sendto-balsa
 #suggest the most important plugins
-Suggests: %name-bluetooth %name-evolution
+Suggests: %{name}-bluetooth
+Suggests: %{name}-evolution
 
 %description
+This application provides integration between nautilus and mail or IM clients.
+It adds a Nautilus context menu component ("Send To...") and features
+a dialog for insert the email or IM account which you want to send
+the file/files.
+
+%package gajim
+Summary: Send files from nautilus extras
+Group: Graphical desktop/GNOME
+Requires: %{name} = %{version}
+
+%description gajim
 This application provides integration between nautilus and mail or IM clients.
 It adds a Nautilus context menu component ("Send To...") and features
 a dialog for insert the email or IM account which you want to send
@@ -37,7 +49,7 @@ the file/files.
 Summary: Send files from nautilus to pidgin
 Group: Graphical desktop/GNOME
 Requires: pidgin
-Requires: %name = %version
+Requires: %{name} = %{version}
 Provides: nautilus-sendto-gaim
 Obsoletes: nautilus-sendto-gaim
 
@@ -46,11 +58,10 @@ This application provides integration between nautilus and pidgin.  It
 adds a Nautilus context menu component ("Send To...") and features a
 dialog for insert the IM account which you want to send the file/files.
 
-
 %package upnp
 Summary: Send files from nautilus via UPNP
 Group: Graphical desktop/GNOME
-Requires: %name = %version
+Requires: %{name} = %{version}
 
 %description upnp
 This application provides integration between nautilus and UPNP.
@@ -61,7 +72,7 @@ files to UPNP media servers.
 Summary: Send files from nautilus to evolution
 Group: Graphical desktop/GNOME
 Requires: evolution
-Requires: %name = %version
+Requires: %{name} = %{version}
 
 %description evolution
 This application provides integration between nautilus and evolution.
@@ -78,56 +89,47 @@ This package provides development files needed to build plugins upon
 nautilus-sendto.
 
 %prep
-%setup -q -n %name-%version
+%setup -q
 
 %build
-#gw: https://bugzilla.gnome.org/show_bug.cgi?id=597270 
-%define _disable_ld_as_needed 1
 %configure2_5x
 %make
 
 %install
-rm -rf %{buildroot} %name.lang
+rm -rf %{buildroot} %{name}.lang
 %makeinstall_std
-%find_lang %name
-rm -f %buildroot%_libdir/nautilus/extensions-*/*.la \
-      %buildroot%_libdir/pidgin/*.la \
-      %buildroot%_libdir/%name/plugins/*.la
-rm -f %buildroot%_libdir/nautilus-sendto/plugins/libnstbluetooth.so
-%clean
-rm -rf %{buildroot}
+find %buildroot -name *.la | xargs rm
+%find_lang %{name}
 
-%files -f %name.lang
-%defattr(-,root,root)
+rm -f  %{buildroot}%{_libdir}/nautilus/extensions-3.0/libnautilus-sendto.so
+
+%files -f %{name}.lang
 %doc NEWS AUTHORS ChangeLog
-%_bindir/nautilus-sendto
-%_libdir/nautilus/extensions-2.0/libnautilus-sendto.so
-%_mandir/man1/nautilus-sendto.1*
-%dir %_libdir/%name/
-%dir %_libdir/%name/plugins
-%_libdir/%name/plugins/libnstburn.so
-%_libdir/%name/plugins/libnstgajim.so
-%_libdir/%name/plugins/libnstremovable_devices.so
-%_datadir/nautilus-sendto/
-%_datadir/GConf/gsettings/nautilus-sendto-convert
-%_datadir/glib-2.0/schemas/org.gnome.Nautilus.Sendto.gschema.xml
+%{_bindir}/nautilus-sendto
+%{_mandir}/man1/nautilus-sendto.1*
+%dir %{_libdir}/%{name}/
+%dir %{_libdir}/%{name}/plugins
+%{_libdir}/%{name}/plugins/libnstremovable_devices.so
+%{_libdir}/%{name}/plugins/libnstburn.so
+%{_datadir}/nautilus-sendto/
+%{_datadir}/GConf/gsettings/nautilus-sendto-convert
+%{_datadir}/glib-2.0/schemas/org.gnome.Nautilus.Sendto.gschema.xml
+
+%files gajim
+%{_libdir}/%{name}/plugins/libnstgajim.so
 
 %files pidgin
-%defattr(-,root,root)
-%_libdir/%name/plugins/libnstpidgin.so
+%{_libdir}/%{name}/plugins/libnstpidgin.so
 
 %files upnp
-%defattr(-,root,root)
-%_libdir/%name/plugins/libnstupnp.so
+%{_libdir}/%{name}/plugins/libnstupnp.so
 
 %files evolution	 
-%defattr(-,root,root)	 
-%_libdir/%name/plugins/libnstevolution.so
+%{_libdir}/%{name}/plugins/libnstevolution.so
 
 %files devel
-%defattr(-,root,root)
-%dir %_includedir/nautilus-sendto
-%_includedir/nautilus-sendto/nautilus-sendto-plugin.h
-%_libdir/pkgconfig/nautilus-sendto.pc
-%_datadir/gtk-doc/html/nautilus-sendto
+%dir %{_includedir}/nautilus-sendto
+%{_includedir}/nautilus-sendto/nautilus-sendto-plugin.h
+%{_libdir}/pkgconfig/nautilus-sendto.pc
+%{_datadir}/gtk-doc/html/nautilus-sendto
 
