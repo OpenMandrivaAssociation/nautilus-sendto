@@ -1,7 +1,7 @@
 Summary: Send files from nautilus using with mail or IM
 Name: nautilus-sendto
 Version: 3.0.1
-Release: 1
+Release: 2
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: http://www.es.gnome.org/~telemaco/
