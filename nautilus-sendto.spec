@@ -4,18 +4,18 @@ Summary:	Send files from nautilus using with mail or IM
 Name:		nautilus-sendto
 Version:	3.8.0
 Release:	1
-Source0:	http://download.gnome.org/sources/%{name}/%{url_ver}/%{name}-%{version}.tar.xz
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://www.gnome.org/
-BuildRequires:	pkgconfig(glib-2.0) >= 2.25.9
-BuildRequires:	pkgconfig(gthread-2.0) >= 2.25.9
-BuildRequires:	pkgconfig(gmodule-2.0) >= 2.25.9
-BuildRequires:	pkgconfig(gtk+-3.0) >= 2.90.9
-BuildRequires:	pkgconfig(gio-2.0)
-BuildRequires:	pkgconfig(gobject-introspection-1.0)
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{url_ver}/%{name}-%{version}.tar.xz
 BuildRequires:	gnome-common
 BuildRequires:	intltool
+BuildRequires:	pkgconfig(gio-2.0)
+BuildRequires:	pkgconfig(glib-2.0) >= 2.25.9
+BuildRequires:	pkgconfig(gmodule-2.0) >= 2.25.9
+BuildRequires:	pkgconfig(gobject-introspection-1.0)
+BuildRequires:	pkgconfig(gthread-2.0) >= 2.25.9
+BuildRequires:	pkgconfig(gtk+-3.0) >= 2.90.9
 Requires:	nautilus
 Obsoletes:	%{name}-gajim
 Obsoletes:	%{name}-sylpheed
@@ -40,13 +40,11 @@ a dialog for insert the email account which you want to send the file/files.
 %make
 
 %install
-rm -rf %{buildroot} %name.lang
 %makeinstall_std
-%find_lang %name
+%find_lang %{name}
 
-find %{buildroot} -name *.la | xargs rm -f
-
-%files -f %name.lang
+%files -f %{name}.lang
 %doc NEWS AUTHORS ChangeLog
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
+
