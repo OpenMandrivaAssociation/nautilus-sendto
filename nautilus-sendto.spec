@@ -2,8 +2,8 @@
 
 Summary:	Send files from nautilus using with mail or IM
 Name:		nautilus-sendto
-Version:	3.8.0
-Release:	7
+Version:	3.8.2
+Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://www.gnome.org/
@@ -36,7 +36,7 @@ a dialog for insert the email account which you want to send the file/files.
 %setup -q
 
 %build
-%configure2_5x
+%configure --enable-compile-warnings=no
 %make
 
 %install
