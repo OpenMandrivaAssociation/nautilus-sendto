@@ -1,5 +1,6 @@
 removed_sources:
   nautilus-sendto-3.6.0.tar.xz: c50d2a1b7828b88fa5d2360629b59e431875f06c
   nautilus-sendto-3.8.0.tar.xz: 95dce15ffe23d806d756bfd0061276e8226d3dc6
-sources:
   nautilus-sendto-3.8.2.tar.xz: 0ad16ffbe3c903d5672a3e75f8bb0540978e6088
+sources:
+  nautilus-sendto-3.8.6.tar.xz: 7a7d311b49e894df4bbf44de6f842c751ffc8354
