@@ -49,7 +49,8 @@ a dialog for insert the email account which you want to send the file/files.
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc NEWS AUTHORS ChangeLog
+%doc NEWS AUTHORS README
 %{_bindir}/%{name}
+%{_datadir}/appdata/%{name}.metainfo.xml
 %{_mandir}/man1/%{name}.1*
 
