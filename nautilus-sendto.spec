@@ -2,8 +2,8 @@
 
 Summary:	Send files from nautilus using with mail or IM
 Name:		nautilus-sendto
-Version:	3.8.2
-Release:	4
+Version:	3.8.6
+Release:	1
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
 Url:		http://www.gnome.org/
@@ -16,6 +16,10 @@ BuildRequires:	pkgconfig(gmodule-2.0) >= 2.25.9
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
 BuildRequires:	pkgconfig(gthread-2.0) >= 2.25.9
 BuildRequires:	pkgconfig(gtk+-3.0) >= 2.90.9
+BuildRequires:	pkgconfig(appstream-glib)
+BuildRequires:	gnome-common
+BuildRequires:	intltool
+BuildRequires:	meson
 Requires:	nautilus
 Obsoletes:	%{name}-gajim
 Obsoletes:	%{name}-sylpheed
@@ -36,15 +40,17 @@ a dialog for insert the email account which you want to send the file/files.
 %setup -q
 
 %build
-%configure --enable-compile-warnings=no
-%make
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc NEWS AUTHORS ChangeLog
+%doc NEWS AUTHORS README
 %{_bindir}/%{name}
+%{_datadir}/appdata/%{name}.metainfo.xml
 %{_mandir}/man1/%{name}.1*
 
