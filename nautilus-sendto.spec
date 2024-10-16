@@ -6,7 +6,7 @@ Version:	3.8.6
 Release:	3
 License:	GPLv2+
 Group:		Graphical desktop/GNOME
-Url:		http://www.gnome.org/
+Url:		https://www.gnome.org/
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/nautilus-sendto/%{url_ver}/%{name}-%{version}.tar.xz
 BuildRequires:	gnome-common
 BuildRequires:	intltool
